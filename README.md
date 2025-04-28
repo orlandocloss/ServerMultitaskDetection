@@ -3,21 +3,21 @@
 This repository contains code to automatically download and process videos from the Sensing Garden API, extract frames, run object detection and species classification, and upload results back to the Sensing Garden database.
 
 ## Setup Instructions
-1. Setup server
-2. Clone the Repository
+### 1. Setup server
+### 2. Clone the Repository
 ```
 git clone https://github.com/orlandocloss/sensing-garden-processing.git
 cd sensing-garden-processing
 ```
 
-3. Create Python Environment
+### 3. Create Python Environment
 Create and activate a virtual environment, then install the required dependencies:
 ```
 python -m venv venv
 source venv/bin/activate  
 pip install -r requirements.txt
 ```
-4. Configure Environment Variables
+### 4. Configure Environment Variables
 Create a .env file in the root directory with the following content:
 ```
 # API Key for authentication (required)
@@ -32,7 +32,7 @@ AWS_SECRET_ACCESS_KEY=your_aws_secret_key_here
 AWS_REGION=us-east-1
 ```
 
-6. Download Model Weights
+### 6. Download Model Weights
 Download the required model weights files:
 
 *YOLO weights for general object detection*
