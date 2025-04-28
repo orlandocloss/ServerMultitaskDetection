@@ -60,5 +60,5 @@ The main script (client_processing.py) can be run with various command-line argu
 
 Example Usage:
 ```
-python client_processing.py --output-path ./my_results --yolo-weights ./models/insect_detector.pt --hierarchical-weights ./models/species_classifier.pt --time-interval 1.0 --species-file ./species_list.txt --interval-hours 3
+python3 client_processing.py --output-path ./my_results --yolo-weights ./models/insect_detector.pt --hierarchical-weights ./models/species_classifier.pt --time-interval 1.0 --species-file ./species_list.txt --interval-hours 3
 ```
