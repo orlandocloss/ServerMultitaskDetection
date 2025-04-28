@@ -14,7 +14,7 @@ cd sensing-garden-processing
 Create and activate a virtual environment, then install the required dependencies:
 ```
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  
 pip install -r requirements.txt
 ```
 4. Configure Environment Variables
@@ -36,7 +36,10 @@ AWS_REGION=us-east-1
 Download the required model weights files:
 
 *YOLO weights for general object detection*
-*Hierarchical classifier weights for species identification*
+https://github.com/orlandocloss/sensing-garden-processing/releases/download/generic-weights/small-generic.pt
+
+*Hierarchical classifier weights for species identification (bjerge species)*
+https://github.com/orlandocloss/sensing-garden-processing/releases/download/hierarchical-weights/best_bjerge.pt
 
 Place them in the project directory or specify their paths when running the script.
 
