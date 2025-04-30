@@ -38,8 +38,8 @@ Download the required model weights files:
 *YOLO weights for general object detection*
 https://github.com/orlandocloss/sensing-garden-processing/releases/download/generic-weights/small-generic.pt
 
-*Hierarchical classifier weights for species identification (bjerge species)*
-https://github.com/orlandocloss/sensing-garden-processing/releases/download/hierarchical-weights/best_bjerge.pt
+*Hierarchical classifier weights for species identification (london) + txt file for list of species
+(https://github.com/orlandocloss/sensing-garden-processing/releases/tag/hierarchical-weights
 
 Place them in the project directory or specify their paths when running the script.
 
