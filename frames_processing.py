@@ -345,11 +345,21 @@ class TwoStage:
         
         results_dict = {}
 
+        # Sort images to ensure consistent processing order
+        # Try to sort numerically if possible (for frame sequences)
+        try:
+            image_names.sort(key=lambda x: int(''.join(filter(str.isdigit, x))))
+        except:
+            image_names.sort()  # Fall back to lexicographical sort
+
+        # Process frames in sequence for proper tracking
         for image_name in tqdm(image_names, desc="Processing Images", unit="image"):
             image_path = os.path.join(image_dir, image_name)
             frame = cv2.imread(image_path)
+            
             with torch.no_grad():
-                results = self.yolo_model(frame, conf=0.55, verbose=False)
+                # Simply use track with persist=True - this maintains tracking state between frames
+                results = self.yolo_model.track(frame, conf=0.55, persist=True, verbose=False)
 
             detections = results[0].boxes
             frame_results = []
@@ -362,6 +372,11 @@ class TwoStage:
                     height = y2 - y1
                     x_center = x1 + width / 2
                     y_center = y1 + height / 2
+
+                    # Get the track ID (will be None if tracking failed for this detection)
+                    track_id = None
+                    if hasattr(box, 'id') and box.id is not None:
+                        track_id = box.id.item()
 
                     insect_crop = frame[int(y1):int(y2), int(x1):int(x2)]
                     insect_crop_rgb = cv2.cvtColor(insect_crop, cv2.COLOR_BGR2RGB)
@@ -409,7 +424,8 @@ class TwoStage:
                         "genus_confidence": genus_confidence,
                         "species_confidence": species_confidence,
                         "timestamp": dir_name,
-                        "bbox": [x_center_norm, y_center_norm, width_norm, height_norm]
+                        "bbox": [x_center_norm, y_center_norm, width_norm, height_norm],
+                        "track_id": track_id  # Add the track ID to the results
                     }
                     
                     frame_results.append(detection_result)

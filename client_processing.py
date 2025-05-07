@@ -118,7 +118,8 @@ def json_to_database(sgc, device_id, model_id, json_file, frame_dir, timestamp):
                     genus_confidence=detection["genus_confidence"],
                     species_confidence=detection["species_confidence"],
                     timestamp=frame_timestamp,
-                    bounding_box=detection["bbox"]
+                    bounding_box=detection["bbox"],
+                    track_id=detection["track_id"]
                 )
                 
                 # Removed individual print for each upload
@@ -323,6 +324,40 @@ def signal_handler(sig, frame):
     print("\nShutting down gracefully. Waiting for current processing to complete...")
     sys.exit(0)
 
+def test_processing(video_path, output_path, species_txt, yolo_weights, hierarchical_weights):
+    """
+    Test processing function that extracts frames from a video, runs object detection, and saves the results.
+    
+    Args:
+        video_path: Path to the input video file
+        output_path: Path to the output directory for processed data
+        species_txt: Path to the text file containing species names
+        yolo_weights: Path to the YOLO weights file
+        hierarchical_weights: Path to the hierarchical classifier weights file
+    """
+    # Create output directory for extracted frames
+    frames_output_dir = os.path.join(output_path, "extracted_frames")
+    os.makedirs(frames_output_dir, exist_ok=True)
+    
+    print(f"Created frames directory at: {frames_output_dir}")
+    # Extract frames from the video
+    extract_frames(video_path, frames_output_dir)
+
+    # Load species names from file
+    species_names = []
+    try:
+        with open(species_txt, 'r') as f:
+            species_names = [line.strip() for line in f if line.strip()]
+        print(f"Loaded {len(species_names)} species names from {species_txt}")
+    except Exception as e:
+        print(f"Error loading species file: {str(e)}. Using empty species list.")
+
+    # Process the frames with the object detection model
+    _, output_file = process_multitask(species_names, frames_output_dir, yolo_weights, hierarchical_weights, output_path)
+    
+    print(f"Processing complete. Results saved to: {output_file}")
+    
+
 if __name__ == "__main__":
     # Set up command line argument parsing
     parser = argparse.ArgumentParser(description='Process videos from Sensing Garden API and run object detection.')
@@ -404,4 +439,3 @@ if __name__ == "__main__":
         print(f"Error in main loop: {str(e)}")
         raise
 
-    

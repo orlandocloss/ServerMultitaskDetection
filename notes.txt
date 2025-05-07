@@ -1,0 +1,3 @@
+more robust tracking of downloads
+only download 10 new videos (dont stack up count each time)
+tracking in pipeline
