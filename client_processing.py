@@ -379,7 +379,7 @@ if __name__ == "__main__":
     
     interval_seconds = args.interval_hours * 3600
     
-    current_limit = 100
+    current_limit = 10
     
     try:
         # Initial run
