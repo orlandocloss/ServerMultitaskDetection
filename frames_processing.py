@@ -359,7 +359,7 @@ class TwoStage:
             
             with torch.no_grad():
                 # Simply use track with persist=True - this maintains tracking state between frames
-                results = self.yolo_model.track(frame, conf=0.35, persist=True, verbose=False)
+                results = self.yolo_model.track(frame, conf=0.45, persist=True, verbose=False)
 
             detections = results[0].boxes
             frame_results = []
