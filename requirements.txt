@@ -48,7 +48,7 @@ s3transfer==0.12.0
 scikit-learn==1.6.1
 scipy==1.15.2
 seaborn==0.13.2
-sensing_garden_client==0.0.11
+sensing_garden_client==0.0.12
 six==1.17.0
 sympy==1.14.0
 tabulate==0.9.0

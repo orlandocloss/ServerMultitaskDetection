@@ -1,17 +1,18 @@
-import cv2
-import os
-from frames_processing import process_multitask
-import os
-from dotenv import load_dotenv
-from sensing_garden_client import SensingGardenClient
-import json
-import requests
-import tempfile
-from tqdm import tqdm
 import argparse
-import time
+import json
+import os
 import signal
 import sys
+import tempfile
+import time
+
+import cv2
+import requests
+from dotenv import load_dotenv
+from frames_processing import process_multitask
+from sensing_garden_client import SensingGardenClient
+from tqdm import tqdm
+
 
 def extract_frames(input_path, output_dir="./frames", interval_seconds=None):
     """
@@ -119,7 +120,7 @@ def json_to_database(sgc, device_id, model_id, json_file, frame_dir, timestamp):
                     species_confidence=detection["species_confidence"],
                     timestamp=frame_timestamp,
                     bounding_box=detection["bbox"],
-                    track_id=detection["track_id"]
+                    track_id=str(detection["track_id"])
                 )
                 
                 # Removed individual print for each upload
