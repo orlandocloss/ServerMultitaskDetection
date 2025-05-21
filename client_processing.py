@@ -9,9 +9,10 @@ import time
 import cv2
 import requests
 from dotenv import load_dotenv
-from frames_processing import process_multitask
 from sensing_garden_client import SensingGardenClient
 from tqdm import tqdm
+
+from frames_processing import process_multitask
 
 
 def extract_frames(input_path, output_dir="./frames", interval_seconds=None):
@@ -154,7 +155,9 @@ def download_videos(sgc, device_id, output_dir, limit=10, skip_identifiers=None)
     
     videos_response = sgc.videos.fetch(
         device_id=device_id,
-        limit=limit
+        limit=limit,
+        sort_by="timestamp",
+        sort_desc=True
     )
     
     print(f"Found {len(videos_response.get('items', []))} videos")
